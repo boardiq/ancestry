@@ -31,7 +31,8 @@ class << ActiveRecord::Base
     self.touch_ancestors = options[:touch] || false
 
     # Validate format of ancestry column value
-    validates_format_of ancestry_column, :with => Ancestry::ANCESTRY_PATTERN, :allow_nil => true
+    format_regex = options.key?(:primary_key_format) && options[:primary_key_format].kind_of?(Regexp) ? options[:primary_key_format] : Ancestry::ANCESTRY_PATTERN
+    validates_format_of ancestry_column, :with => format_regex, :allow_nil => true
 
     # Validate that the ancestor ids don't include own id
     validate :ancestry_exclude_self
