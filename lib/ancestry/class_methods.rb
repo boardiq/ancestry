@@ -60,7 +60,7 @@ module Ancestry
     def arrange_serializable options={}, nodes=nil
       nodes = arrange(options) if nodes.nil?
       nodes.map do |parent, children|
-        parent.serializable_hash.merge 'children' => arrange_serializable(options, children)
+        parent.serializable_hash.merge 'items' => arrange_serializable(options, children)
       end
     end
 
